@@ -158,7 +158,9 @@ public class LoginGui {
     }
 
     public static void main(String[] args) throws Exception {
-        createLoginGui();
+        for (int i = 0; i < 2; i++) {
+            createLoginGui();
+        }
     }
 
 

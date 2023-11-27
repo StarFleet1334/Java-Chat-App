@@ -1,5 +1,6 @@
 package client_side;
 
+import client_side.navbar_options.AboutOption;
 import com.vdurmont.emoji.EmojiParser;
 import server_side.Server;
 
@@ -57,23 +58,23 @@ public class ClientGui extends Thread{
 
         // Module du fil de discussion
         // width 740
-        jtextFilDiscu.setBounds(25, 25, 680, 600);
+        jtextFilDiscu.setBounds(25, 35, 680, 600);
         jtextFilDiscu.setFont(font);
         jtextFilDiscu.setMargin(new Insets(6, 6, 6, 6));
         jtextFilDiscu.setEditable(false);
         JScrollPane jtextFilDiscuSP = new JScrollPane(jtextFilDiscu);
-        jtextFilDiscuSP.setBounds(25, 25, 680, 600);
+        jtextFilDiscuSP.setBounds(25, 35, 680, 600);
 
         jtextFilDiscu.setContentType("text/html");
         jtextFilDiscu.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, true);
 
-        jtextListUsers.setBounds(780, 25, 200, 600);
+        jtextListUsers.setBounds(780, 35, 200, 600);
         jtextListUsers.setEditable(true);
         jtextListUsers.setFont(font);
         jtextListUsers.setMargin(new Insets(6, 6, 6, 6));
         jtextListUsers.setEditable(false);
         JScrollPane jsplistuser = new JScrollPane(jtextListUsers);
-        jsplistuser.setBounds(780, 25, 200, 600);
+        jsplistuser.setBounds(780, 35, 200, 600);
 
         jtextListUsers.setContentType("text/html");
         jtextListUsers.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, true);
@@ -94,6 +95,52 @@ public class ClientGui extends Thread{
         final JButton disconnectButton = new JButton("Disconnect");
         disconnectButton.setFont(font);
         disconnectButton.setBounds(840, 650, 150, 35);
+
+
+        // Navbar
+
+        JPanel navbarPanel = new JPanel();
+        navbarPanel.setBackground(Color.lightGray);
+        ;
+        JButton aboutButton = new JButton("About");
+        JButton contactButton = new JButton("Contact");
+        JButton gameButton = new JButton("Games");
+
+
+        // Add action listeners to the buttons
+        gameButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(jfr, "You clicked Game button");
+            }
+        });
+
+        aboutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                AboutOption aboutOption = new AboutOption();
+            }
+        });
+
+        contactButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(jfr, "You clicked Contact button");
+            }
+        });
+
+
+        // Add buttons to the navbar panel
+        navbarPanel.add(gameButton);
+        navbarPanel.add(aboutButton);
+        navbarPanel.add(contactButton);
+
+
+
+        navbarPanel.setBounds(350,0,300,35);
+
+
+        jfr.add(navbarPanel);
 
         jtextInputChat.addKeyListener(new KeyAdapter() {
             // send message on Enter
@@ -230,7 +277,7 @@ public class ClientGui extends Thread{
                                 appendToPane(jtextListUsers, "@ " + user);
                             }
                         }else{
-                            appendToPane(jtextListUsers, message);
+                            appendToPane(jtextFilDiscu, message);
                         }
                     }
                 }

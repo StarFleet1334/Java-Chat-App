@@ -1,6 +1,8 @@
 package client_side;
 
 import client_side.navbar_options.AboutOption;
+import client_side.navbar_options.ContactOption;
+import client_side.navbar_options.GamesOption;
 import com.vdurmont.emoji.EmojiParser;
 import server_side.Server;
 
@@ -111,7 +113,7 @@ public class ClientGui extends Thread{
         gameButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(jfr, "You clicked Game button");
+                GamesOption gamesOption = new GamesOption();
             }
         });
 
@@ -125,7 +127,7 @@ public class ClientGui extends Thread{
         contactButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(jfr, "You clicked Contact button");
+                ContactOption contactOption = new ContactOption();
             }
         });
 

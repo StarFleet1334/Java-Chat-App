@@ -1,6 +1,7 @@
 package client_side;
 
 import server_side.Server;
+import utils.Jackson;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 public class CreateServerGui {
 
 
-    public CreateServerGui(ArrayList<ArrayList<String>> availableServers) {
+    public CreateServerGui(ArrayList<ArrayList<String>> availableServers,Jackson jackson) {
         String fontfamily = "Arial, sans-serif";
         Font font = new Font(fontfamily, Font.PLAIN, 15);
 
@@ -96,6 +97,7 @@ public class CreateServerGui {
             @Override
             public void actionPerformed(ActionEvent e) {
                 LoginGui.addServer(portField.getText(),serverField.getText());
+                jackson.marshallingFromObjectToJson(portField.getText(),serverField.getText());
                 JOptionPane.showMessageDialog(frame,"Server created and added to available servers!");
             }
         });

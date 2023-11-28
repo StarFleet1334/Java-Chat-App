@@ -179,7 +179,7 @@ public class LoginGui {
         createServerBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                CreateServerGui createServerGui = new CreateServerGui(availableServers);
+                CreateServerGui createServerGui = new CreateServerGui(availableServers,jackson);
             }
         });
     }

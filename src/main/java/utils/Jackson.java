@@ -3,6 +3,7 @@ package utils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import models.IndividualServer;
 import models.ServerConfig;
+import server_side.Server;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,5 +32,14 @@ public class Jackson {
         return individualServerList;
     }
 
-    public void marshallingFromObjectToJson(String port, String server) {}
+    public void marshallingFromObjectToJson(String port, String server) {
+        IndividualServer individualServer = new IndividualServer();
+        individualServer.setServer(port);
+        individualServer.setServer(server);
+        individualServerList.add(individualServer);
+
+        // now here run the server
+        Server.runSingleServer(port);
+
+    }
 }

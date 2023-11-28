@@ -48,8 +48,26 @@ public class Server {
             Thread thread = new Thread(runnable);
             thread.start();
         }
+    }
 
+    public static void runSingleServer(String port) {
 
+        System.out.println("was here");
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                Server server1 = new Server(Integer.parseInt(port));
+                try {
+                    System.out.println("Inside");
+                    server1.run();
+                    Thread.sleep(1000);
+                } catch (IOException | InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        };
+        Thread thread = new Thread(runnable);
+        thread.start();
     }
 
     public Server(int port) {

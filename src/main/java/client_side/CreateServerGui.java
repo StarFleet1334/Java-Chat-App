@@ -103,7 +103,11 @@ public class CreateServerGui {
         backBnt.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                LoginGui loginGui = new LoginGui();
+                try {
+                    LoginGui loginGui = new LoginGui();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
     }

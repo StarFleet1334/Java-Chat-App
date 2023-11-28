@@ -30,7 +30,7 @@ public class Server {
         // Parse Json into Object
         Jackson jackson = new Jackson();
 
-        for (IndividualServer x : jackson.unmarshallingFromJsonToObject()) {
+        for (IndividualServer x : Jackson.getIndividualServerList()) {
             final int port = Integer.parseInt(x.getPort());
 
             Runnable runnable = new Runnable() {

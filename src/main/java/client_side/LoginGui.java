@@ -1,5 +1,9 @@
 package client_side;
 
+import models.AvailableServers;
+import models.IndividualServer;
+import utils.Jackson;
+
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -16,20 +20,22 @@ public class LoginGui {
     private JComboBox<String> serverDropdown;
     private JComboBox<String> portDropdown;
 
+    private static Jackson jackson;
 
-    public LoginGui() {
-        // First Server
-        availableServers.add(new ArrayList<>(Arrays.asList("12345", "127.0.0.1")));
-
-        // Second Server
-        availableServers.add(new ArrayList<>(Arrays.asList("22222", "127.0.0.1")));
-
-
-        // Third Server
-        availableServers.add(new ArrayList<>(Arrays.asList("33333", "127.0.0.1")));
+    static {
+        try {
+            jackson = new Jackson();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 
-        System.out.println(availableServers);
+    public LoginGui() throws IOException {
+        System.out.println(Jackson.individualServerList);
+        for (IndividualServer x: Jackson.getIndividualServerList()) {
+            availableServers.add(new ArrayList<>(Arrays.asList(x.getPort(),x.getServer())));
+        }
 
         String fontfamily = "Arial, sans-serif";
         Font font = new Font(fontfamily, Font.PLAIN, 15);
@@ -71,6 +77,9 @@ public class LoginGui {
 
         final JButton createServerBtn = new JButton("Create-server");
 
+        final JButton checkServersBtn = new JButton("Check-servers");
+
+        checkServersBtn.setFont(font);
 
         // check if those field are not empty
         nameField.getDocument().addDocumentListener(new TextListener(nameField, jcbtn));
@@ -107,10 +116,15 @@ public class LoginGui {
         //  server button
         createServerBtn.setBounds(310,180,150,30);
 
+        // Check Server Button
+        checkServersBtn.setBounds(250,220,150,30);
+
 
         // Adding Components to Frame
         frame.add(nickName);
         frame.add(nameField);
+
+        frame.add(checkServersBtn);
 
         frame.add(portInfo);
         frame.add(portDropdown);
@@ -126,6 +140,17 @@ public class LoginGui {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
+        checkServersBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    AvailableServers availableServers1 = new AvailableServers(jackson);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
+
 
         // On connect
         jcbtn.addActionListener(new ActionListener() {
@@ -136,11 +161,18 @@ public class LoginGui {
                     JTextField portField = new JTextField((String) portDropdown.getSelectedItem());
                     JTextField serverField = new JTextField((String) serverDropdown.getSelectedItem());
                     ClientGui clientGui = new ClientGui(server,nameField,portField,serverField);
+
                 } catch (IOException e) {
                     JOptionPane.showMessageDialog(frame,e.getMessage());
-
+                } finally {
+                    for (IndividualServer x : Jackson.individualServerList) {
+                        if (x.getPort().equals(portDropdown.getSelectedItem())
+                        && x.getServer().equals(serverDropdown.getSelectedItem())) {
+                            x.incrementNumberOfUsersJoined();
+                        }
+                        System.out.println(x.getPort() + " " + x.getNumberOfUsersJoined());
+                    }
                 }
-
             }
         });
 

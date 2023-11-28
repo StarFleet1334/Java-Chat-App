@@ -1,37 +1,41 @@
-package models;
+    package models;
 
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+    import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class IndividualServer {
-    private String port;
-    private String server;
+    public class IndividualServer {
+        private String port;
+        private String server;
 
-    @JsonProperty("port")
-    public String getPort() {
-        return port;
+        private int numberOfUsersJoined;
+
+        @JsonProperty("port")
+        public String getPort() {
+            return port;
+        }
+
+        @JsonProperty("port")
+        public void setPort(String port) {
+            this.port = port;
+        }
+
+        @JsonProperty("server")
+        public String getServer() {
+            return server;
+        }
+
+        @JsonProperty("server")
+        public void setServer(String server) {
+            this.server = server;
+        }
+
+        public int getNumberOfUsersJoined() {
+            return numberOfUsersJoined;
+        }
+
+        // Increment the number of users joined by 1
+        public void incrementNumberOfUsersJoined() {
+            this.numberOfUsersJoined++;
+        }
+
     }
-
-    @JsonProperty("port")
-    public void setPort(String port) {
-        this.port = port;
-    }
-
-    @JsonProperty("server")
-    public String getServer() {
-        return server;
-    }
-
-    @JsonProperty("server")
-    public void setServer(String server) {
-        this.server = server;
-    }
-
-    @Override
-    public String toString() {
-        return "Server{" +
-                "port='" + port + '\'' +
-                ", server='" + server + '\'' +
-                '}';
-    }
-}

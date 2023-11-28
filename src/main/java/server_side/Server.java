@@ -1,14 +1,18 @@
 package server_side;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import models.IndividualServer;
+import models.ServerConfig;
+import utils.Jackson;
+
+import java.io.File;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.net.URL;
+import java.util.*;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 import java.awt.Color;
@@ -20,10 +24,32 @@ public class Server {
 
     private int port;
 
+
     public static void main(String[] args) throws IOException, InterruptedException {
 
-        Server server1 = new Server(12345);
-        server1.start();
+        // Parse Json into Object
+        Jackson jackson = new Jackson();
+
+        for (IndividualServer x : jackson.unmarshallingFromJsonToObject()) {
+            final int port = Integer.parseInt(x.getPort());
+
+            Runnable runnable = new Runnable() {
+                @Override
+                public void run() {
+                    Server server1 = new Server(port);
+                    try {
+                        server1.run();
+                        Thread.sleep(1000);
+                    } catch (IOException | InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            };
+            Thread thread = new Thread(runnable);
+            thread.start();
+        }
+
+
     }
 
     public Server(int port) {
@@ -31,10 +57,6 @@ public class Server {
         this.clients = new ArrayList<User>();
     }
 
-    public void start() throws IOException, InterruptedException {
-        run();
-        Thread.sleep(1000);
-    }
 
     public void run() throws IOException {
         server = new ServerSocket(port) {
@@ -42,7 +64,8 @@ public class Server {
                 this.close();
             }
         };
-        System.out.println("Port 12345 is now open.");
+
+        System.out.println("Port " + port + " is now opened.");
 
         while (true) {
             // accepts a new client

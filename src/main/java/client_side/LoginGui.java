@@ -1,7 +1,5 @@
 package client_side;
 
-import server_side.Server;
-
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -9,8 +7,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.Objects;
+import java.util.*;
 
 public class LoginGui {
 
@@ -21,10 +18,17 @@ public class LoginGui {
 
 
     public LoginGui() {
-        ArrayList<String> defaultServer = new ArrayList<>();
-        defaultServer.add("12345");
-        defaultServer.add("127.0.0.1");
-        availableServers.add(defaultServer);
+        // First Server
+        availableServers.add(new ArrayList<>(Arrays.asList("12345", "127.0.0.1")));
+
+        // Second Server
+        availableServers.add(new ArrayList<>(Arrays.asList("22222", "127.0.0.1")));
+
+
+        // Third Server
+        availableServers.add(new ArrayList<>(Arrays.asList("33333", "127.0.0.1")));
+
+
         System.out.println(availableServers);
 
         String fontfamily = "Arial, sans-serif";
@@ -171,16 +175,24 @@ public class LoginGui {
         availableServers.add(serverInfo);
     }
 
+    // Handle unique dropdrown
+    private HashSet<ArrayList<String>> uniqueDropDown() {
+        return new HashSet<>(LoginGui.availableServers);
+    }
+
+
     private void populateServerDropdown() {
         // Clear existing items in the server dropdown
         serverDropdown.removeAllItems();
 
         // Populate the server dropdown with available servers
-        for (ArrayList<String> serverInfo : availableServers) {
+        for (ArrayList<String> serverInfo : uniqueDropDown()) {
             String server = serverInfo.get(1);
             serverDropdown.addItem(server);
         }
     }
+
+
 
     private void populatePortDropdown() {
         // Clear existing items in the port dropdown
@@ -190,7 +202,7 @@ public class LoginGui {
         // You may need to modify this based on how you obtain available ports
         // For simplicity, let's assume a predefined list of ports
 
-        for (ArrayList<String> serverInfo : availableServers) {
+        for (ArrayList<String> serverInfo : uniqueDropDown()) {
             String port = serverInfo.get(0);
             portDropdown.addItem(port);
         }

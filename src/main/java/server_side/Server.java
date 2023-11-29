@@ -12,6 +12,8 @@ import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URL;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
@@ -23,6 +25,8 @@ public class Server {
     private ServerSocket server;
 
     private int port;
+
+    private final SimpleDateFormat sdf3 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 
     public static void main(String[] args) throws IOException, InterruptedException {
@@ -121,8 +125,9 @@ public class Server {
     // send incoming msg to all Users
     public void broadcastMessages(String msg, User userSender) {
         for (User client : this.clients) {
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
             client.getOutStream().println(
-                    userSender.toString() + "<span>: " + msg+"</span>");
+                    userSender.toString() + "<span>: " + sdf3.format(timestamp) + " " + msg + "</span>");
         }
     }
 
@@ -136,12 +141,13 @@ public class Server {
     // send message to a User (String)
     public void sendMessageToUser(String msg, User userSender, String user){
         boolean find = false;
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         for (User client : this.clients) {
             if (client.getNickname().equals(user) && client != userSender) {
                 find = true;
                 userSender.getOutStream().println(userSender.toString() + " -> " + client.toString() +": " + msg);
                 client.getOutStream().println(
-                        "(<b>Private</b>)" + userSender.toString() + "<span>: " + msg+"</span>");
+                        "(<b>Private</b>)" + userSender.toString() + " " + sdf3.format(timestamp)  + "<span>: " + msg+"</span>");
             }
         }
         if (!find) {

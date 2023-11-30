@@ -1,5 +1,8 @@
 package client_side.navbar_options;
 
+import games.break_game.Gameplay;
+import games.snake_game.SnakeGame;
+
 import javax.swing.*;
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
@@ -44,6 +47,29 @@ public class GamesOption {
         snakeGameBtn.setBounds(250,150,100,40);
 
         jButton.setBounds(250,200,100,40);
+
+        snakeGameBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+
+        breakGameBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame frame = new JFrame();
+                Gameplay gamePlay = new Gameplay();
+
+                frame.setBounds(200,100, 700, 600);
+                frame.setTitle("Breakout Ball");
+                frame.setResizable(false);
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.setVisible(true);
+                frame.add(gamePlay);
+                frame.setVisible(true);
+            }
+        });
 
         jButton.addActionListener(new ActionListener() {
             @Override

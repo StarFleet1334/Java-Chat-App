@@ -1,5 +1,7 @@
 package client_side;
 
+import games.break_game.Gameplay;
+import games.snake_game.SnakeGame;
 import models.AvailableServers;
 import models.IndividualServer;
 import utils.Jackson;

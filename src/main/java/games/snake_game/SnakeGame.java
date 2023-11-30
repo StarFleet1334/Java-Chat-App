@@ -13,7 +13,7 @@ import javax.swing.*;
  * @author Brendan Jones
  *
  */
-public class SnakeGame extends JPanel implements ActionListener, KeyListener {
+public class SnakeGame extends JPanel implements ActionListener, KeyListener,Runnable {
 
     /**
      * The Serial Version UID.
@@ -102,6 +102,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
      * Creates a new SnakeGame instance. Creates a new window,
      * and sets up the controller input.
      */
+
     public SnakeGame() {
         setLayout(new BorderLayout());
         addKeyListener(this);
@@ -116,21 +117,16 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
         add(board, BorderLayout.CENTER);
         add(side, BorderLayout.EAST);
 
-        /*
-         * Adds a new key listener to the frame to process input.
-         */
-
-        /*
-         * Resize the window to the appropriate size, center it on the
-         * screen and display it.
-         */
+       Thread thread = new Thread(this);
+       thread.start();
 
     }
 
     /**
      * Starts the game running.
      */
-    public void startGame() {
+    @Override
+    public void run() {
         /*
          * Initialize everything we're going to be using.
          */
@@ -565,7 +561,10 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
                 }
                 break;
             case KeyEvent.VK_0:
-                System.exit(0);
+                JFrame currentFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+                if (currentFrame != null) {
+                    currentFrame.dispose();
+                }
                 break;
         }
     }
@@ -574,4 +573,5 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
     public void keyReleased(KeyEvent e) {
 
     }
+
 }

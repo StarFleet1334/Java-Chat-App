@@ -51,17 +51,15 @@ public class GamesOption {
         snakeGameBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JFrame frame = new JFrame();
                 SnakeGame snakeGame = new SnakeGame();
-                frame.add(snakeGame);
-                frame.setBounds(4,100, 800, 535);
-                frame.setTitle("B");
-                frame.setResizable(false);
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.setLocationRelativeTo(null);
-                frame.setVisible(true);
-                snakeGame.startGame();
-                frame.pack();
+                JFrame snakeGameFrame = new JFrame("Snake Game");
+                snakeGameFrame.setBounds(200, 100, 800, 535);
+                snakeGameFrame.setResizable(false);
+                snakeGameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                snakeGameFrame.setLocationRelativeTo(null);
+                snakeGameFrame.add(snakeGame);
+                snakeGameFrame.setVisible(true);
+                snakeGameFrame.pack();
             }
         });
 
@@ -70,7 +68,6 @@ public class GamesOption {
             public void actionPerformed(ActionEvent e) {
                 JFrame frame = new JFrame();
                 Gameplay gamePlay = new Gameplay();
-
                 frame.setBounds(200,100, 700, 600);
                 frame.setTitle("Breakout Ball");
                 frame.setResizable(false);
@@ -108,5 +105,6 @@ public class GamesOption {
             e.printStackTrace();
         }
     }
+
 
 }

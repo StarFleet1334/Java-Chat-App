@@ -51,7 +51,17 @@ public class GamesOption {
         snakeGameBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                JFrame frame = new JFrame();
+                SnakeGame snakeGame = new SnakeGame();
+                frame.add(snakeGame);
+                frame.setBounds(4,100, 800, 535);
+                frame.setTitle("B");
+                frame.setResizable(false);
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.setLocationRelativeTo(null);
+                frame.setVisible(true);
+                snakeGame.startGame();
+                frame.pack();
             }
         });
 

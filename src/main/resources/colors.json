@@ -1,0 +1,70 @@
+[
+  {
+    "name": "Dark blue",
+    "color_code": "#3079ab"
+  },
+  {
+    "name": "Light-Red",
+    "color_code": "#e15258"
+  },
+  {
+    "name": "Orange",
+    "color_code": "#f9845b"
+  },
+  {
+    "name": "Purple",
+    "color_code": "#7d669e"
+  },
+  {
+    "name": "Aqua",
+    "color_code": "#53bbb4"
+  },
+  {
+    "name": "Green",
+    "color_code": "#51b46d"
+  },
+  {
+    "name": "Mustard",
+    "color_code": "#e0ab18"
+  },
+  {
+    "name": "Pink",
+    "color_code": "#f092b0"
+  },
+  {
+    "name": "Yellow",
+    "color_code": "#e8d174"
+  },
+  {
+    "name": "Light-Orange",
+    "color_code": "#e39e54"
+  },
+  {
+    "name": "Red",
+    "color_code": "#d64d4d"
+  },
+  {
+    "name": "Lime",
+    "color_code": "#00FF00"
+  },
+  {
+    "name": "Teal",
+    "color_code": "#008080"
+  },
+  {
+    "name": "Navy",
+    "color_code": "#000080"
+  },
+  {
+    "name": "Fuchisa",
+    "color_code": "#FF00FF"
+  },
+  {
+    "name": "Olive",
+    "color_code": "#808000"
+  },
+  {
+    "name": "Maroon",
+    "color_code": "#800000"
+  }
+]

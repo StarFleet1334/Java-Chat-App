@@ -4,7 +4,8 @@ import client_side.navbar_options.AboutOption;
 import client_side.navbar_options.ContactOption;
 import client_side.navbar_options.GamesOption;
 import com.vdurmont.emoji.EmojiParser;
-import server_side.Server;
+import models.Status;
+
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -14,12 +15,41 @@ import java.awt.event.KeyEvent;
 import java.net.*;
 import java.io.*;
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.text.html.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
+
+
+class MiniUser {
+
+    private String name;
+    private static Status status = Status.IDLE;
+
+    public MiniUser(String name) {
+        this.name = name;
+    }
+
+    public void setStatus(Status status) {
+        status = status;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    @Override
+    public String toString() {
+        return "MiniUser{" +
+                "name='" + name + '\'' +
+                '}';
+    }
+
+    public String getName() {
+        return name;
+    }
+}
 
 
 public class ClientGui extends Thread{
@@ -40,6 +70,7 @@ public class ClientGui extends Thread{
     JTextField nameField;
     JTextField portField;
     JTextField serverField;
+
 
     public ClientGui(Socket server,JTextField nameField,JTextField portField,JTextField serverField) {
         this.serverName = serverField.getText();
@@ -184,6 +215,7 @@ public class ClientGui extends Thread{
 
         try {
             name = nameField.getText();
+            // we add user with given nickName in list
             String port = portField.getText();
             serverName = serverField.getText();
             PORT = Integer.parseInt(port);
@@ -268,6 +300,9 @@ public class ClientGui extends Thread{
                             ArrayList<String> ListUser = new ArrayList<String>(
                                     Arrays.asList(message.split(", "))
                             );
+
+
+
                             jtextListUsers.setText(null);
 
                             String emoji = ":st_patrick:";
@@ -275,8 +310,10 @@ public class ClientGui extends Thread{
 
                             appendToPane(jtextListUsers,  result + " ----- " + "Online" + " ----- " + result);
                             appendToPane(jtextListUsers," ");
-                            for (String user : ListUser) {
-                                appendToPane(jtextListUsers, "@ " + user);
+                            for (String x : ListUser) {
+                                String idle = ":headphones:";
+                                String rs = EmojiParser.parseToUnicode(idle);
+                                appendToPane(jtextListUsers, "@ " + x + " " + rs);
                             }
                         }else{
                             appendToPane(jtextFilDiscu, message);

@@ -1,6 +1,8 @@
 package utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import models.ColorList;
+import models.Colors;
 import models.IndividualServer;
 import models.ServerConfig;
 import server_side.Server;
@@ -14,6 +16,7 @@ import java.util.Objects;
 public class Jackson {
 
     public static List<IndividualServer> individualServerList = new ArrayList<>();
+
 
     public Jackson() throws IOException {
         unmarshallingFromJsonToObject();
@@ -40,6 +43,6 @@ public class Jackson {
 
         // now here run the server
         Server.runSingleServer(port);
-
     }
+
 }

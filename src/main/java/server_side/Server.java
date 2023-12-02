@@ -2,10 +2,7 @@ package server_side;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vdurmont.emoji.EmojiParser;
-import models.IndividualServer;
-import models.ServerConfig;
-import models.Status;
-import models.User;
+import models.*;
 import utils.Jackson;
 
 import java.io.File;
@@ -180,18 +177,22 @@ class UserHandler implements Runnable {
         while (sc.hasNextLine()) {
             message = sc.nextLine();
 
-            // smiley
-            message = message.replace(":)", "<img src='http://4.bp.blogspot.com/-ZgtYQpXq0Yo/UZEDl_PJLhI/AAAAAAAADnk/2pgkDG-nlGs/s1600/facebook-smiley-face-for-comments.png'>");
-            message = message.replace(":D", "<img src='http://2.bp.blogspot.com/-OsnLCK0vg6Y/UZD8pZha0NI/AAAAAAAADnY/sViYKsYof-w/s1600/big-smile-emoticon-for-facebook.png'>");
-            message = message.replace(":d", "<img src='http://2.bp.blogspot.com/-OsnLCK0vg6Y/UZD8pZha0NI/AAAAAAAADnY/sViYKsYof-w/s1600/big-smile-emoticon-for-facebook.png'>");
-            message = message.replace(":(", "<img src='http://2.bp.blogspot.com/-rnfZUujszZI/UZEFYJ269-I/AAAAAAAADnw/BbB-v_QWo1w/s1600/facebook-frown-emoticon.png'>");
-            message = message.replace("-_-", "<img src='http://3.bp.blogspot.com/-wn2wPLAukW8/U1vy7Ol5aEI/AAAAAAAAGq0/f7C6-otIDY0/s1600/squinting-emoticon.png'>");
-            message = message.replace(";)", "<img src='http://1.bp.blogspot.com/-lX5leyrnSb4/Tv5TjIVEKfI/AAAAAAAAAi0/GR6QxObL5kM/s400/wink%2Bemoticon.png'>");
-            message = message.replace(":P", "<img src='http://4.bp.blogspot.com/-bTF2qiAqvi0/UZCuIO7xbOI/AAAAAAAADnI/GVx0hhhmM40/s1600/facebook-tongue-out-emoticon.png'>");
-            message = message.replace(":p", "<img src='http://4.bp.blogspot.com/-bTF2qiAqvi0/UZCuIO7xbOI/AAAAAAAADnI/GVx0hhhmM40/s1600/facebook-tongue-out-emoticon.png'>");
-            message = message.replace(":o", "<img src='http://1.bp.blogspot.com/-MB8OSM9zcmM/TvitChHcRRI/AAAAAAAAAiE/kdA6RbnbzFU/s400/surprised%2Bemoticon.png'>");
-            message = message.replace(":O", "<img src='http://1.bp.blogspot.com/-MB8OSM9zcmM/TvitChHcRRI/AAAAAAAAAiE/kdA6RbnbzFU/s400/surprised%2Bemoticon.png'>");
+            File file = new File(
+                    Objects.requireNonNull(this.getClass().getClassLoader().getResource("emoji.json")).getFile()
+            );
+            ObjectMapper mapper = new ObjectMapper();
 
+            // Read the JSON data into a List<Colors>
+            List<Emoji> emojiList = null;
+            try {
+                emojiList = mapper.readValue(file, mapper.getTypeFactory().constructCollectionType(List.class, Emoji.class));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            // smiley
+            for (Emoji x : emojiList) {
+                message = message.replace(x.getEmoji(),x.getUrl());
+            }
             // Gestion des messages private
             if (message.charAt(0) == '@'){
                 if(message.contains(" ")){

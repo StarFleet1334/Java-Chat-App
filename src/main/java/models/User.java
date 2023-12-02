@@ -22,6 +22,8 @@ public class User {
 
     private Status status = Status.IDLE;
 
+
+    private ColorInt colorInt = new ColorInt();
     // constructor
     public User(Socket client, String name) throws IOException {
         this.streamOut = new PrintStream(client.getOutputStream());
@@ -29,11 +31,11 @@ public class User {
         this.client = client;
         this.nickname = name;
         this.userId = nbUser;
-        this.color = ColorInt.getColor(this.userId);
+        this.color = colorInt.getColor(this.userId);
         nbUser += 1;
     }
 
-    public User(String name) {
+    public User(String name) throws IOException {
         this.nickname = name;
     }
 
